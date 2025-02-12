@@ -2,7 +2,8 @@
 1. Construction de la base de test
 A. mot à mot : https://www.fr.brezhoneg.bzh/49-lexiques.htm#par1574
 B. corpus : https://github.com/Ofis-publik-ar-brezhoneg/breton-french-corpus
-a. Vector Database : 
+a. Vector Database :
+Quelle embedding ?
 - Zilliz Cloud :
 ID projet : proj-d43d2396e426a66dcd9025
 Public Endpoint : https://in03-944f34cea0c1859.serverless.gcp-us-west1.cloud.zilliz.com
