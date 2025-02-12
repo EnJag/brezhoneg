@@ -1,7 +1,15 @@
 à faire :
 1. Construction de la base de test
 A. mot à mot : https://www.fr.brezhoneg.bzh/49-lexiques.htm#par1574
-Tabula: 
-a. Arnaud : Vocabulaire du code de la route - Civilités
-b. Teddy : Les champignons - La météorologie
-c. Enzo : La pharmacie - Jeux de plateau
+B. corpus : https://github.com/Ofis-publik-ar-brezhoneg/breton-french-corpus
+a. Vector Database : 
+- Zilliz Cloud :
+ID projet : proj-d43d2396e426a66dcd9025
+Public Endpoint : https://in03-944f34cea0c1859.serverless.gcp-us-west1.cloud.zilliz.com
+Token : e9202f865e5ec16f40f0362f08a09902e8e6676b0880ab72dc10e33c353922e37b29f53200e3a9506dcba6386b17f6ac5393fef5
+Cluster : Free-01
+Collection : tra_fr_bre
+
+2. Llama 3.2-1B :
+a. RAG
+b. Fine-tune
