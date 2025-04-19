@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg*
+dist/
+build/
+*.log
+*.pot
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Cache Files (IMPORTANT!)
+# Use the specific path from your config or a pattern
+D:/cache/
+cache/
+*.cache
+
+# Secrets / Environment variables
+.env*
+secrets.yaml
+
+# IDE specific
+.idea/
+.vscode/
+*.sublime-*
+
+# OS specific
+.DS_Store
+Thumbs.db
