@@ -91,8 +91,8 @@ class BretonTraducteur:
         # Default prompt if no RAG/Prompt mode was selected
         if not prompt_generated:
             # print("Using default prompt generation logic (no RAG/Prompt requested)...")
-            if model_name == "helsinki":
-                 question_to_ask = "Translate to English:\n\n" + text
+            if model_name == "nllb finetuned":
+                 question_to_ask = text
             else:
                  question_to_ask = "Traduire en breton:\n\n" + text
             # print("Default prompt set.")
