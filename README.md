@@ -15,7 +15,7 @@ This project provides a Gradio web interface for translating French text using d
 -   Secure handling of Zilliz credentials via environment variables.
 
 ## Project Structure
-
+```bash
 breton_translator/
 ├── src/                     # Source code package
 │   ├── init.py
@@ -27,7 +27,7 @@ breton_translator/
 ├── requirements.txt         # Python dependencies
 ├── .gitignore               # Files ignored by Git
 └── README.md                # This file
-
+```
 
 ## Setup
 
