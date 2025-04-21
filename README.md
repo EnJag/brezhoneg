@@ -7,6 +7,7 @@ This project provides a Gradio web interface for translating French text using d
 -   Translate French text using:
     -   `facebook/nllb-200-distilled-600M` (targeting Breton)
     -   `Helsinki-NLP/opus-mt-fr-en` (targeting English)
+    -   `meta/llama3.2-1B` (targeting Breton)
 -   Optional prompt enhancement:
     -   **RAG**: Retrieve `k` examples **similar** to the input text from a Zilliz Cloud vector database (collection: `traductions_francais_breton`) using the `paraphrase-multilingual-mpnet-base-v2` model to guide the translation.
     -   **Prompt prédéfini**: Retrieve `k` **random** examples from the Zilliz collection (by searching for a random vector) to provide varied context.
@@ -36,7 +37,7 @@ breton_translator/
     git clone <your-repository-url>
     cd breton_translator
     ```
-
+<!-- 
 2.  **Configure Zilliz Credentials:**
     -   Create a file named `.env` in the project root (`breton_translator/.env`).
     -   Add your Zilliz credentials to this file:
@@ -46,24 +47,24 @@ breton_translator/
         ZILLIZ_TOKEN="YOUR_ZILLIZ_TOKEN_HERE"
         ```
     -   **Important:** Ensure `.env` is listed in your `.gitignore` file.
-    -   Alternatively, set these as system environment variables.
+    -   Alternatively, set these as system environment variables. -->
 
-3.  **Create and activate a virtual environment:** (Recommended)
+2.  **Create and activate a virtual environment:** (Recommended)
     ```bash
     python -m venv venv
     # On Windows: venv\Scripts\activate
     # On macOS/Linux: source venv/bin/activate
     ```
 
-4.  **Install dependencies:**
+3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
-
+<!-- 
 5.  **Configure Cache (Optional):**
-    -   The default cache location is `D:/cache`. Change in `src/config.py` or via the `HF_CACHE_DIR` environment variable.
+    -   The default cache location is `D:/cache`. Change in `src/config.py` or via the `HF_CACHE_DIR` environment variable. -->
 
-6.  **Ensure Zilliz Collection Exists:**
+4.  **(facultative) Ensure Zilliz Collection Exists:**
     -   Both RAG modes require a Zilliz Cloud collection named `traductions_francais_breton`.
     -   This collection must contain vectors generated using the `paraphrase-multilingual-mpnet-base-v2` model and have fields named `embedding`, `francais`, and `breton`. You need to create and populate this collection separately.
 
