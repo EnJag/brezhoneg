@@ -1,10 +1,11 @@
 # src/translator.py
 import os
+import ollama
 from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 from .config import (
-    MODEL_NAME_NLLB, MODEL_NAME_HELSINKI,
+    MODEL_NAME_NLLB, MODEL_NAME_HELSINKI, MODEL_NAME_LLAMA,
     MODEL_NAME_TRANSLATOR_SENTENCE_TRANSFORMER,
     TRANSFORMERS_CACHE_PATH, CACHE_DIR
 )
@@ -105,6 +106,8 @@ class BretonTraducteur:
             selected_tokenizer = self.tokenizer_helsinki
             selected_model = self.model_helsinki
             full_model_name = MODEL_NAME_HELSINKI
+        elif model_name == "llama":
+            full_model_name = MODEL_NAME_LLAMA
         else:
             error_msg = f"Error: Model '{model_name}' unknown."
             print(error_msg)
@@ -117,22 +120,31 @@ class BretonTraducteur:
 
         # print(f"Final prompt sent to model:\n------\n{question_to_ask}\n------")
         try:
-            inputs = selected_tokenizer(question_to_ask, return_tensors="pt", truncation=True, max_length=512)
-            generated_ids = None
-            generation_args = {"max_length": 150}
-            if model_name == "nllb" and target_lang_code and not prompt_already_specifies_breton:
-                forced_token_id = selected_tokenizer.lang_code_to_id.get(target_lang_code)
-                if forced_token_id:
-                    # print(f"Forcing NLLB target language to: {target_lang_code}")
-                    generation_args["forced_bos_token_id"] = forced_token_id
-                else:
-                    print(f"Warning: Language code '{target_lang_code}' not found. Using default NLLB generation.")
-            # print(f"Generating translation with args: {generation_args}")
-            generated_ids = selected_model.generate(**inputs, **generation_args)
-            translation = selected_tokenizer.decode(generated_ids[0], skip_special_tokens=True)
-            # print(f"Raw translation received: {translation}")
+            if model_name == "llama":
+                response = ollama.chat(model=full_model_name, messages=[
+                {
+                    'role': 'user',
+                    'content': question_to_ask,
+                },
+                ])
+                translation = response['message']['content']
+            else:
+                inputs = selected_tokenizer(question_to_ask, return_tensors="pt", truncation=True, max_length=512)
+                generated_ids = None
+                generation_args = {"max_length": 150}
+                if model_name == "nllb" and target_lang_code and not prompt_already_specifies_breton:
+                    forced_token_id = selected_tokenizer.lang_code_to_id.get(target_lang_code)
+                    if forced_token_id:
+                        # print(f"Forcing NLLB target language to: {target_lang_code}")
+                        generation_args["forced_bos_token_id"] = forced_token_id
+                    else:
+                        print(f"Warning: Language code '{target_lang_code}' not found. Using default NLLB generation.")
+                # print(f"Generating translation with args: {generation_args}")
+                generated_ids = selected_model.generate(**inputs, **generation_args)
+                translation = selected_tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+                # print(f"Raw translation received: {translation}")
         except Exception as e:
             print(f"Error during generation with model {full_model_name}: {e}")
             translation = f"Error during generation: {e}"
 
-        return use_prompt, use_rag, question_to_ask, translation
+        return question_to_ask, translation # use_prompt, use_rag, 

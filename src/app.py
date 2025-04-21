@@ -56,7 +56,7 @@ def gradio_translate_interface(text_input, selected_model_short_name, mode, k_va
     use_prompt_param = 0
     if mode == "RAG" and k > 0:
         use_rag_param = k
-    elif mode == "Prompt prédéfini" and k > 0:
+    elif mode == "Few-shot learning" and k > 0:
         use_prompt_param = k
     print(f"--- Gradio Request ---")
     print(f"Input Text: '{text_input[:100]}...'")
@@ -64,7 +64,7 @@ def gradio_translate_interface(text_input, selected_model_short_name, mode, k_va
     print(f"Assistance Mode: {mode}, k: {k}")
     print(f"Params for translate(): use_rag={use_rag_param}, use_prompt={use_prompt_param}")
     try:
-        _prompt_ret, _rag_ret, question_sent, translation_result = translator_global.translate(
+        question_sent, translation_result = translator_global.translate( # _prompt_ret, _rag_ret, 
             text=text_input,
             model_name=selected_model_short_name,
             use_rag=use_rag_param,
@@ -79,6 +79,7 @@ def gradio_translate_interface(text_input, selected_model_short_name, mode, k_va
 # --- Gradio Interface Definition ---
 desc_nllb = f"`nllb`: Multi-lingual ({config.MODEL_NAME_NLLB}). Targets **Breton**."
 desc_helsinki = f"`helsinki`: French to English ({config.MODEL_NAME_HELSINKI}). Targets **English**."
+desc_llama = f"`Llama`: Multi-lingual ({config.MODEL_NAME_LLAMA}). Targets **Breton**. "
 desc_rag_model = f"RAG uses `{config.MODEL_NAME_RAG_ENCODER}` via Zilliz."
 
 with gr.Blocks(theme=gr.themes.Soft()) as iface:
@@ -88,6 +89,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as iface:
     Entrez du texte en Français et choisissez un modèle de traduction.
     - **{desc_nllb}**
     - **{desc_helsinki}**
+    - **{desc_llama}**
 
     *Assistance Prompt (Optionnel):* {desc_rag_model}
     - **RAG**: Récupère **k** exemples **similaires** au texte d'entrée depuis Zilliz (collection: `{config.RAG_COLLECTION_NAME}`) pour enrichir le prompt (ajuster 'k' avec le curseur ci-dessous). Nécessite une configuration Zilliz correcte.
@@ -99,9 +101,9 @@ with gr.Blocks(theme=gr.themes.Soft()) as iface:
         with gr.Column(scale=2):
             input_text = gr.Textbox(label="Texte à traduire (Français)", lines=4, placeholder="Entrez votre texte ici...")
             model_choice = gr.Radio(
-                ["nllb", "helsinki"], label="Choisir le modèle de traduction", value="nllb"
+                ["nllb", "helsinki", "llama"], label="Choisir le modèle de traduction", value="nllb"
             )
-            mode_selection = gr.Radio(["Défaut", "RAG", "Prompt prédéfini"], label="Mode d'assistance Prompt", value="Défaut")
+            mode_selection = gr.Radio(["Défaut", "Few-shot learning", "RAG"], label="Mode d'assistance Prompt", value="Défaut")
             k_slider = gr.Slider(minimum=0, maximum=30, value=5, step=1, label="Nombre d'exemples (k)", info="Utilisé si RAG ou Prompt prédéfini est sélectionné et k > 0")
             submit_button = gr.Button("Traduire", variant="primary")
         with gr.Column(scale=3):

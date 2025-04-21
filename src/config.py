@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Configuration Cache HuggingFace ---
-CACHE_DIR = os.environ.get("HF_CACHE_DIR", os.path.join(os.path.expanduser("~"), ".cache", "hf")) # "D:/cache"
+CACHE_DIR = os.environ.get("HF_CACHE_DIR", "D:/cache") # "D:/cache" # os.path.join(os.path.expanduser("~"), ".cache", "hf")
 TRANSFORMERS_CACHE_PATH = os.environ.get("TRANSFORMERS_CACHE", os.path.join(CACHE_DIR, "transformers"))
 # ... (other cache paths) ...
 HF_DATASETS_CACHE_PATH = os.environ.get("HF_DATASETS_CACHE", os.path.join(CACHE_DIR, "datasets"))
@@ -33,6 +33,7 @@ def setup_cache():
 # --- Translator Model Names ---
 MODEL_NAME_NLLB = "facebook/nllb-200-distilled-600M"
 MODEL_NAME_HELSINKI = "Helsinki-NLP/opus-mt-fr-en"
+MODEL_NAME_LLAMA = "llama3.2:1b"
 MODEL_NAME_TRANSLATOR_SENTENCE_TRANSFORMER = 'distiluse-base-multilingual-cased-v1'
 
 # --- RAG / Utils Configuration ---
