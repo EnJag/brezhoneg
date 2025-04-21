@@ -1,6 +1,7 @@
 # Breton Translator - Gradio Interface
 
 This project provides a Gradio web interface for translating French text using different Hugging Face models, with optional prompt assistance via RAG (using Zilliz) or random examples from Zilliz. Zilliz examples are taken from https://github.com/Ofis-publik-ar-brezhoneg/breton-french-corpus.
+The fine-tuning of nllb has been largely inspired by https://cointegrated.medium.com/how-to-fine-tune-a-nllb-200-model-for-translating-a-new-language-a37fc706b865.
 
 ## Features
 
