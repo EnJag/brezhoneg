@@ -1,6 +1,6 @@
 # Breton Translator - Gradio Interface
 
-This project provides a Gradio web interface for translating French text using different Hugging Face models, with optional prompt assistance via RAG (using Zilliz) or random examples from Zilliz.
+This project provides a Gradio web interface for translating French text using different Hugging Face models, with optional prompt assistance via RAG (using Zilliz) or random examples from Zilliz. Zilliz examples are taken from https://github.com/Ofis-publik-ar-brezhoneg/breton-french-corpus.
 
 ## Features
 
@@ -69,7 +69,7 @@ breton_translator/
     -   This collection must contain vectors generated using the `paraphrase-multilingual-mpnet-base-v2` model and have fields named `embedding`, `francais`, and `breton`. You need to create and populate this collection separately.
 
 
-## Running the Application
+5.  **Running the Application**
 
 ```bash
 python src/app.py 
@@ -78,3 +78,7 @@ or
 ```bash
 python -m src.app
 ```
+
+6.  **Go on your browser**
+
+http://127.0.0.1:7860

@@ -5,7 +5,8 @@ from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 from .config import (
-    MODEL_NAME_NLLB, MODEL_NAME_HELSINKI, MODEL_NAME_LLAMA,
+    MODEL_NAME_NLLB, MODEL_NAME_HELSINKI,
+    MODEL_NAME_LLAMA, MODEL_NAME_NLLB_FT,
     MODEL_NAME_TRANSLATOR_SENTENCE_TRANSFORMER,
     TRANSFORMERS_CACHE_PATH, CACHE_DIR
 )
@@ -39,6 +40,14 @@ class BretonTraducteur:
             print("Helsinki model loaded.")
         except Exception as e:
             print(f"ERROR loading Helsinki model {MODEL_NAME_HELSINKI}: {e}")
+            raise
+        print(f"Loading NLLB finetuned model: {MODEL_NAME_NLLB_FT}...")
+        try:
+            self.tokenizer_nllb_ft = AutoTokenizer.from_pretrained(MODEL_NAME_NLLB_FT, cache_dir=TRANSFORMERS_CACHE_PATH)
+            self.model_nllb_ft = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_NLLB_FT, cache_dir=TRANSFORMERS_CACHE_PATH)
+            print("NLLB finetuned model loaded.")
+        except Exception as e:
+            print(f"ERROR loading NLLB finetuned model {MODEL_NAME_NLLB_FT}: {e}")
             raise
         print("--- Translator Class Initialisation Complete ---")
 
@@ -106,6 +115,11 @@ class BretonTraducteur:
             selected_tokenizer = self.tokenizer_helsinki
             selected_model = self.model_helsinki
             full_model_name = MODEL_NAME_HELSINKI
+        elif model_name == "nllb finetuned":
+            selected_tokenizer = self.tokenizer_nllb_ft
+            selected_model = self.model_nllb_ft
+            full_model_name = MODEL_NAME_NLLB_FT
+            target_lang_code = "br_Latn"
         elif model_name == "llama":
             full_model_name = MODEL_NAME_LLAMA
         else:

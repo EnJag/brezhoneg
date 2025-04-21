@@ -80,6 +80,7 @@ def gradio_translate_interface(text_input, selected_model_short_name, mode, k_va
 desc_nllb = f"`nllb`: Multi-lingual ({config.MODEL_NAME_NLLB}). Targets **Breton**."
 desc_helsinki = f"`helsinki`: French to English ({config.MODEL_NAME_HELSINKI}). Targets **English**."
 desc_llama = f"`Llama`: Multi-lingual ({config.MODEL_NAME_LLAMA}). Targets **Breton**. "
+desc_nllb_ft = f"`nllb finetuned`: Multi-lingual ({config.MODEL_NAME_NLLB}). Targets **Breton**. Training Corpus french-breton."
 desc_rag_model = f"RAG uses `{config.MODEL_NAME_RAG_ENCODER}` via Zilliz."
 
 with gr.Blocks(theme=gr.themes.Soft()) as iface:
@@ -90,6 +91,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as iface:
     - **{desc_nllb}**
     - **{desc_helsinki}**
     - **{desc_llama}**
+    - **{desc_nllb_ft}**
 
     *Assistance Prompt (Optionnel):* {desc_rag_model}
     - **RAG**: Récupère **k** exemples **similaires** au texte d'entrée depuis Zilliz (collection: `{config.RAG_COLLECTION_NAME}`) pour enrichir le prompt (ajuster 'k' avec le curseur ci-dessous). Nécessite une configuration Zilliz correcte.
@@ -101,7 +103,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as iface:
         with gr.Column(scale=2):
             input_text = gr.Textbox(label="Texte à traduire (Français)", lines=4, placeholder="Entrez votre texte ici...")
             model_choice = gr.Radio(
-                ["nllb", "helsinki", "llama"], label="Choisir le modèle de traduction", value="nllb"
+                ["nllb", "helsinki", "llama", "nllb finetuned"], label="Choisir le modèle de traduction", value="nllb"
             )
             mode_selection = gr.Radio(["Défaut", "Few-shot learning", "RAG"], label="Mode d'assistance Prompt", value="Défaut")
             k_slider = gr.Slider(minimum=0, maximum=30, value=5, step=1, label="Nombre d'exemples (k)", info="Utilisé si RAG ou Prompt prédéfini est sélectionné et k > 0")
