@@ -18,7 +18,7 @@ The fine-tuning of nllb has been largely inspired by https://cointegrated.medium
 
 ## Project Structure
 ```bash
-breton_translator/
+brezhoneg/
 ├── src/                     # Source code package
 │   ├── init.py
 │   ├── config.py            # Configuration (cache, models, Zilliz endpoint)
